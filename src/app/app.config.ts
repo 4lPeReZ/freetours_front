@@ -1,8 +1,9 @@
-import { ApplicationConfig } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { Injectable } from '@angular/core';
 
-import { routes } from './app.routes';
-
-export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes)]
-};
+@Injectable({
+  providedIn: 'root'
+})
+export class AppConfig {
+  public apiEndpoint: string = 'https://api.misitio.com/';
+  // Otras configuraciones globales
+}
