@@ -1,0 +1,7 @@
+<div *ngIf="user">
+    <h2>Perfil de Usuario</h2>
+    <p><strong>Nombre de Usuario:</strong> {{ user.username }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <button routerLink="/profile/edit">Editar Perfil</button>
+  </div>
+  

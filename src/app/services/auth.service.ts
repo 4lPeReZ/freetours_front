@@ -4,14 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../components/environments/environment.prod'; // Asegúrate de que la ruta es correcta
 import { Router } from '@angular/router';
-
-// Definir una interfaz para el usuario
-interface User {
-  id: number;
-  username: string;
-  email?: string; // email es opcional
-  token: string;
-}
+import { User } from '../models/user.model'; // Importar User
 
 @Injectable({
   providedIn: 'root'
@@ -53,5 +46,21 @@ export class AuthService {
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
     this.router.navigate(['/login']); // Redirigir al login después del logout
+  }
+  
+  getUserProfile(): Observable<User> {
+    return this.http.get<User>(`${environment.apiUrl}/auth/profile`);
+  }
+  
+  updateUserProfile(user: User): Observable<User> {
+    return this.http.put<User>(`${environment.apiUrl}/auth/profile`, user)
+      .pipe(map(updatedUser => {
+        // Actualiza el usuario en el local storage si es el usuario actual
+        if (this.currentUserValue && this.currentUserValue.id === updatedUser.id) {
+          localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+          this.currentUserSubject.next(updatedUser);
+        }
+        return updatedUser;
+      }));
   }
 }
