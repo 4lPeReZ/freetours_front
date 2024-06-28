@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -10,26 +11,30 @@ import { AuthService } from '../../services/auth.service';
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private router: Router // Asegúrate de que Router está inyectado
+  ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
       username: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]]
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (this.registerForm.valid) {
       this.authService.register(this.registerForm.value).subscribe(
         data => {
           console.log('Registration successful', data);
-          // Redireccionar al usuario a la página de inicio de sesión o página principal tras un registro exitoso
+          this.router.navigate(['/login']); // Redirigir al usuario a la página de login después del registro
         },
         error => {
           console.error('Registration failed', error);
-          // Mostrar mensajes de error en la UI
+          // Mostrar un mensaje de error en la UI
         }
       );
     }

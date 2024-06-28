@@ -28,10 +28,9 @@ export class AuthService {
 
   public get currentUserValue(): User | null {
     return this.currentUserSubject.value;
-  }  
+  }
 
   login(username: string, password: string): Observable<User> {
-    // Asegúrate de reemplazar `{apiUrl}` con la URL real de tu API
     return this.http.post<User>(`${environment.apiUrl}/auth/login`, { username, password })
       .pipe(map(user => {
         if (user && user.token) {
@@ -42,13 +41,13 @@ export class AuthService {
       }));
   }
 
-  register(user: User): Observable<User> {
-    // Asegúrate de reemplazar `{apiUrl}` con la URL real de tu API
-    return this.http.post<User>(`${environment.apiUrl}/auth/register`, user)
-      .pipe(map(user => {
-        return user; // Puedes decidir si guardar o no al usuario en localStorage
+  register(user: User): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/auth/register`, user)
+      .pipe(map(response => {
+        console.log(response); // Aquí puedes ver exactamente qué está devolviendo el servidor
+        return response;
       }));
-  }
+  }  
 
   logout(): void {
     localStorage.removeItem('currentUser');
