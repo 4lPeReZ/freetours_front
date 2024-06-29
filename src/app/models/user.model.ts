@@ -1,7 +1,7 @@
 export interface User {
-    id: number;
-    username: string;
-    email?: string; // email es opcional
-    token?: string;
-  }
-  
+  id: number;
+  username: string;
+  email: string;
+  roles: string[];
+  token: string;
+}

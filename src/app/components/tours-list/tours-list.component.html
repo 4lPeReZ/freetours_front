@@ -1,0 +1,13 @@
+<div *ngIf="authService.isAdmin()">
+  <button (click)="goToCreateTour()">Crear Tour</button>
+</div>
+
+<ul>
+  <li *ngFor="let tour of tours">
+    <h2>{{ tour.name }}</h2>
+    <p>{{ tour.description }}</p>
+    <p>{{ tour.city }}</p>
+    <p>{{ tour.date }}</p>
+    <!-- Añade más información según sea necesario -->
+  </li>
+</ul>

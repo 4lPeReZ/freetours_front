@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { User } from '../../models/user.model'; // Importar User
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-profile-edit',
@@ -10,8 +9,7 @@ import { User } from '../../models/user.model'; // Importar User
   styleUrls: ['./profile-edit.component.css']
 })
 export class ProfileEditComponent implements OnInit {
-  editForm!: FormGroup;
-  user: User | null = null;
+  editForm!: FormGroup; // Definimos el formulario aquí
 
   constructor(
     private formBuilder: FormBuilder,
@@ -20,12 +18,17 @@ export class ProfileEditComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.editForm = this.formBuilder.group({
+      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: [''] // Opcional, solo si el usuario quiere cambiar la contraseña
+    });
+
     this.authService.getUserProfile().subscribe(
       data => {
-        this.user = data;
-        this.editForm = this.formBuilder.group({
-          username: [this.user.username, Validators.required],
-          email: [this.user.email, [Validators.required, Validators.email]]
+        this.editForm.patchValue({
+          username: data.username,
+          email: data.email
         });
       },
       error => {
@@ -36,18 +39,13 @@ export class ProfileEditComponent implements OnInit {
 
   onSubmit(): void {
     if (this.editForm.valid) {
-      const updatedUser: User = {
-        ...this.user!,
-        ...this.editForm.value
-      };
-
-      this.authService.updateUserProfile(updatedUser).subscribe(
-        data => {
-          console.log('Profile updated successfully', data);
+      this.authService.updateUserProfile(this.editForm.value).subscribe(
+        response => {
+          console.log('Perfil actualizado con éxito', response);
           this.router.navigate(['/profile']);
         },
         error => {
-          console.error('Error updating profile', error);
+          console.error('Error al actualizar el perfil', error);
         }
       );
     }

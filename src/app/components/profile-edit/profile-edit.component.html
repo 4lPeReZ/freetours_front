@@ -1,12 +1,15 @@
 <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
-    <div>
-      <label for="username">Nombre de Usuario:</label>
-      <input type="text" id="username" formControlName="username">
-    </div>
-    <div>
-      <label for="email">Email:</label>
-      <input type="email" id="email" formControlName="email">
-    </div>
-    <button type="submit" [disabled]="!editForm.valid">Guardar Cambios</button>
-  </form>
-  
+  <div>
+    <label for="username">Nombre de usuario:</label>
+    <input type="text" id="username" formControlName="username">
+  </div>
+  <div>
+    <label for="email">Email:</label>
+    <input type="email" id="email" formControlName="email">
+  </div>
+  <div>
+    <label for="password">Contraseña:</label>
+    <input type="password" id="password" formControlName="password">
+  </div>
+  <button type="submit" [disabled]="!editForm.valid">Guardar Cambios</button>
+</form>

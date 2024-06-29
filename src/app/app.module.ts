@@ -10,6 +10,10 @@ import { HomeComponent } from './components/home/home.component';
 import { ProtectedComponent } from './components/protected/protected.component';
 import { ProfileViewComponent } from './components/profile-view/profile-view.component';
 import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
+import { ToursListComponent } from './components/tours-list/tours-list.component';
+import { TourDetailsComponent } from './components/tour-details/tour-details.component';
+import { TourCreateComponent } from './components/tour-create/tour-create.component';
+import { TourEditComponent } from './components/tour-edit/tour-edit.component';
 import { JwtInterceptor } from './services/jwt-interceptor.service';
 import { routes } from './app.routes';
 
@@ -21,7 +25,11 @@ import { routes } from './app.routes';
     HomeComponent,
     ProtectedComponent,
     ProfileViewComponent,
-    ProfileEditComponent
+    ProfileEditComponent,
+    ToursListComponent,
+    TourDetailsComponent,
+    TourCreateComponent,
+    TourEditComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +38,7 @@ import { routes } from './app.routes';
     HttpClientModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true } // Añadir el interceptor aquí
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

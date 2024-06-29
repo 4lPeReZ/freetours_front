@@ -1,0 +1,10 @@
+<div *ngIf="tour">
+    <h2>{{ tour.title }}</h2>
+    <p>{{ tour.description }}</p>
+    <p><strong>Location:</strong> {{ tour.location }}</p>
+    <p><strong>Date:</strong> {{ tour.date | date }}</p>
+    <p><strong>Price:</strong> {{ tour.price | currency }}</p>
+    <button routerLink="/tours/edit/{{ tour.id }}">Editar</button>
+    <button (click)="deleteTour(tour.id!)">Eliminar</button> <!-- Usar operador de aserción no nulo (!) -->
+  </div>
+  
